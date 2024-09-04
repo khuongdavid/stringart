@@ -1,0 +1,190 @@
+{% extends 'home/layout.html' %}
+{% load static %}
+
+{% block title %}
+  Trang chủ
+{% endblock %}
+
+{% block content %}
+  <div class="content d-flex justify-content-center align-items-center vh-100" id="background_head" style="background-image: url('{% static 'img/tettt.png' %}'); 
+      background-size: cover;
+      background-repeat: no-repeat;">
+    <img src="{% static 'img/logo.png' %}" alt="" class="m-10" id="logo-head" />
+  </div>
+  <div class="container pt-5" id='intro' style="height: 100vh; width: 100%; background-color: dimgray;">
+    <div class="row">
+      <h1 class="text-center">String Art</h1>
+      <h4 class="text-center">Chào mừng bạn đến với nghệ thuật từ dây</h4>
+      <hr>
+      <div class="col-sm-6">
+        <div class="row">
+          <div class="container m-4">
+            <div class="row">
+              <div class="col-sm-4">
+                <img src="{% static 'img/MaryEverestBoole.jpeg' %}" alt="" class="mr-auto">
+              </div>
+              <div class="col-sm-8">
+                  <p>
+                    Nghệ thuật từ dây lần đầu được đưa ra bởi một người giáo viên nữ người Anh có tên là MaryEverestBoole
+                    <br>
+                    Việc cho học sinh tạo nên các tác phẩm từ dây đã góp phần giúp chúng tăng khả năng hình học, tư duy logic và sáng tạo
+                  </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="row">
+          <div class="container m-4">
+            <div class="row">
+              <div class="col-sm-4">
+                <img src="{% static 'img/001.jpg' %}" alt="" style="width: 100%; height: auto;">
+              </div>
+              <div class="col-sm-8">
+                <p>
+                  Một String Art bao gồm các thành phần sau đây
+                </p>
+                <ul>
+                  <li>
+                    <p>
+                      <b>Khung tranh</b>
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      <b>Đinh neo</b>
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      <b>Dây</b>
+                    </p>
+                  </li>
+                </ul>
+                <p>Việc kết hợp ba thành phần trên, ta có tạo ra được các tác phẩm nghệ thuật từ dây</p>
+                
+              </div>
+            </div>
+            <div class="row mt-5">
+              <div class="content">
+                <h4>
+                  Bạn có thể tự tạo cho mình một tác phẩm <a class="text-white link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{% url 'art:create_art' %}">tại đây</a>
+                </h4>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row art-row justify-content-center mt-5">
+      {% for art in art_rectangular %}
+        <div class="col-sm-4 card-container mt-5 position-relative">
+          <div class="col-sm-12">
+            <div class="card text-white" style="background-color: black;">
+              <div class="card-header">
+                <img src="{{ art.image1.url }}" alt="hình ảnh" class="img-fluid fixed-size-img" style="width: 100%; height: auto;" />
+              </div>
+              <div class="card-body mb-5">
+                <h5 class="card-title">{{ art.title }}</h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 mt-auto d-flex justify-content-center position-absolute" style="bottom: 0; right: 0; top: auto;">
+            <button class="btn btn-secondary" onclick="window.location.href='{% url 'art:art_deltail' art.id %}'">Xem thêm</button>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <div id="contact" class="container mt-5 bg-dark p-4">
+      <h2 class="text-center">Liên hệ</h2>
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          {% if user.is_authenticated %}
+          <form action="{% url 'user:contact' user.id %}" method="post">
+          {% else %}
+          <form action="{% url 'user:contact_no_id'%}" method="post">
+          {% endif %}
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="firstname" class="form-label">Tên:</label>
+                <input type="text" class="form-control" id="firstname" name="firstname" required 
+                {% if user.is_authenticated %}
+                value="{{ user.firstname }}"
+                {% endif %}>
+              </div>
+              <div class="col-sm-6">
+                <label for="lastname" class="form-label">Họ:</label>
+                <input type="text" class="form-control" id="lastname" name="lastname" required
+                {% if user.is_authenticated %}
+                value="{{ user.lastname }}"
+                {% endif %}>
+                
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email:</label>
+              <input type="email" class="form-control" id="email" name="email" required
+              {% if user.is_authenticated %}
+              value="{{ user.email }}"
+              {% endif %}>
+            </div>
+            <div class="mb-3">
+              <label for="message" class="form-label">Tin nhắn:</label>
+              <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Gửi</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="row art-row justify-content-center bg-white mt-5 mb-5">
+      {% for art in art_circle %}
+        {% if art.is_published %}
+        <div class="col-sm-4 card-container mt-5 position-relative mb-5">
+          <div class="col-sm-12">
+            <div class="card text-black bg-transparent border-0 p-0">
+              <div class="card-header p-0 border-0">
+                <img src="{{ art.image1.url }}" alt="hình ảnh" class="img-fluid fixed-size-img" style="width: 100%; height: auto;" />
+              </div>
+              <div class="card-body mb-5">
+                <h5 class="card-title">{{ art.title }}</h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 mt-auto d-flex justify-content-center position-absolute" style="bottom: 0; right: 0; top: auto;">
+            <button class="btn btn-secondary" onclick="window.location.href='{% url 'art:art_deltail' art.id %}'">Xem thêm</button>
+          </div>
+        </div>  
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <div class="row art-row justify-content-center mt-5">
+      {% for art in art_digital_prints %}
+        <div class="col-sm-4 card-container mt-5 position-relative mb-5">
+          <div class="col-sm-12">
+            <div class="card text-white" style="background-color: black;">
+              <div class="card-header">
+                <img src="{{ art.image1.url }}" alt="hình ảnh" class="img-fluid fixed-size-img" style="width: 100%; height: auto;" />
+              </div>
+              <div class="card-body mb-5">
+                <h5 class="card-title">{{ art.title }}</h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 mt-auto d-flex justify-content-center position-absolute" style="bottom: 0; right: 0; top: auto;">
+            <button class="btn btn-secondary" onclick="window.location.href='{% url 'art:art_deltail' art.id %}'">Xem thêm</button>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

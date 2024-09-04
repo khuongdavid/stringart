@@ -1,0 +1,111 @@
+{% extends 'home/layout.html' %}
+{% block content %}
+  {% if user %}
+    <form action="{% url 'user:edit_user' user.id %}" method="post" enctype="multipart/form-data" class="row" style="">
+      {% csrf_token %}
+      <div class="col-sm-3 mt-4">
+        <div class="row justify-content-center border border-white rounded">
+          <div class="row m-2 text-center text-white ">
+            <h4>{{ user.username }}</h4>
+            <hr>
+          </div>
+          <div class="row m-2">
+            {% load static %}
+            <img src="{% if user.image %}
+              {{ user.image.url }}
+            {% else %}
+              {% static 'img/default.png' %}
+            {% endif %}"
+            alt="hình ảnh"
+            class="img-fluid fixed-size-img"
+           />
+          </div>
+          <div class="row m-2">
+            <button type="" class="btn btn-primary mgt-3">{{ form.image }}</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 mt-4 ms-auto">
+        <div class="row border border-white rounded">
+          <div class="row mt-2 mx-1">
+            <div class="col-sm-1">
+              <label for="lastname" class="form-label">Họ:</label>
+            </div>
+            <div class="col-sm-5">{{ form.lastname }}</div>
+            <div class="col-sm-1">
+              <label for="firstname" class="form-label">Tên:</label>
+            </div>
+            <div class="col-sm-5">{{ form.firstname }}</div>
+          </div>
+          <div class="row mt-2 mx-1">
+            <div class="col-sm-2">
+              <label for="email" class="form-label">Email:</label>
+            </div>
+            <div class="col-sm-10">{{ form.email }}</div>
+          </div>
+          <div class="row mt-2 mx-1">
+              <div class="col-sm-2">
+                <label for="phone" class="form-label">Số điện thoại:</label>
+              </div>
+              <div class="col-sm-10">{{ form.phone }}</div>
+            </div>
+  
+            <div class="row mt-2 mx-1">
+              <div class="col-sm-2">
+                <label for="oldpassword" class="form-label">Mật khẩu:</label>
+              </div>
+              <div class="col-sm-10">
+                <input type="password" name="oldpassword" id="oldpassword" class="form-control m-2">
+              </div>
+            </div>
+            
+            <div id="changePasswordBtn" class="row mt-2 mx-1" style="display:none;">
+              <button type="button" class="btn btn-warning" id="btnChangePassword">Đổi mật khẩu</button>
+            </div>
+            
+            <div id="newPasswordFields" style="display:none;">
+              <div class="row mt-2 mx-1">
+                <div class="col-sm-2">
+                  <label for="newpassword" class="form-label">Mật khẩu mới:</label>
+                </div>
+                <div class="col-sm-10">
+                  <input type="password" name="newpassword" id="newpassword" class="form-control m-2">
+                </div>
+              </div>
+              <div class="row mt-2 mx-1">
+                <div class="col-sm-2">
+                  <label for="confirmpassword" class="form-label">Xác nhận mật khẩu mới:</label>
+                </div>
+                <div class="col-sm-10">
+                  <input type="password" name="confirmpassword" id="confirmpassword" class="form-control m-2">
+                </div>
+              </div>
+            </div>
+            <div class="container m-3">
+              <button type="submit" id="submitBtn" class="btn btn-primary mx-1 disabled">Cập nhật</button>
+              <button type="reset" class="btn btn-secondary mx-1">Hủy</button>
+            </div>
+        </div>
+        </div>
+      </form>
+      
+      <script>
+        $(document).ready(function() {
+          $('#oldpassword').on('input', function() {
+            if ($(this).val().length > 0) {
+              $('#changePasswordBtn').show();
+            } else {
+              $('#changePasswordBtn').hide();
+              $('#newPasswordFields').hide();
+            }
+
+          });
+          
+          $('#btnChangePassword').click(function() {
+            $('#newPasswordFields').toggle();
+          });
+        });
+      </script>
+    {% endif %}
+  {% endblock %}

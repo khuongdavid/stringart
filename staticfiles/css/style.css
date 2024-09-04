@@ -1,0 +1,41 @@
+body{
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    background-color: #000 !important;
+    color: #fff;
+}
+#background_head{
+    height: 100%;
+}
+#logo-head{
+    width: 30%;
+    height: auto;
+}
+#navbar {
+    position: fixed-top;
+  }
+
+
+
+.art-row {
+    overflow: hidden;
+}
+
+.art-item {
+    flex: 0 0 calc(100% / 3);
+    box-sizing: border-box;
+}
+
+.container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+#block-content {
+    margin-top: 150px;
+}
+#alert-success {
+    top: 150px !important;
+    position: fixed !important;
+    z-index: 9999 !important; /* Đảm bảo thẻ alert nằm trên các thẻ khác */
+}

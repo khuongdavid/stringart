@@ -1,0 +1,236 @@
+{% extends 'home/layout.html' %}
+
+{% block content %}
+  <div class="container mt-5" style="padding-bottom: 100vh;">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="accordion" id="accordionInput">
+          <div class="accordion-item">
+            <h2 class="accordion-header bg-dark" id="headingInput">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInput" aria-expanded="flase" aria-controls="collapseInput">
+                Input
+              </button>
+            </h2>
+            <div id="collapseInput" class="accordion-collapse collapse" aria-labelledby="headingInput" data-bs-parent="#accordionInput">
+              <div class="accordion-body bg-black">
+                <div class="row text-white">
+                  <form action="{% url 'art:create_art' %}" method="post" enctype="multipart/form-data" id="formCreateArt">
+                    {% csrf_token %}
+                    <div class="row bg-dark p-2">
+                      <label for="image" class="form-label" id="image">Chọn hình ảnh</label>
+                      <input type="file" name="image" id="image" />
+                    </div>
+                    <div class="row bg-dark mt-2 p-2">
+                      <label for="pull_amount" class="form-label">Số lượng đường chỉ</label>
+                      <input type="range" id="pull_amount" name="pull_amount" class="form-range" step="10" min="100" max="10000" value="1500" />
+                      <span id="pull_amount_value">1500</span>
+                      <p class="text-danger" id="pull_amount_warning" style="display: none;">Số lượng càng lớn, xử lý càng chậm!!!</p>
+                    </div>
+                    <div class="row bg-dark mt-2 p-2">
+                      <label for="side_len" class="form-label">Độ mỏng chỉ</label>
+                      <input type="range" id="side_len" name="side_len" class="form-range" step="1" min="0" max="1000" value="300" />
+                      <span id="side_len_value">300</span>
+                      <p class="text-danger" style="display: none;" id="side_len_warning">độ mỏng càng lớn ảnh càng rõ nét, độ cháy ảnh càng cao!!!</p>
+                    </div>
+                    <div class="row bg-dark mt-2 p-2">
+                      <label for="export_strength" class="form-label">Độ sáng ảnh</label>
+                      <input type="range" id="export_strength" name="export_strength" class="form-range" step="0.01" min="0.01" max="0.1" value="0.05" />
+                      <span id="export_strength_value">0.05</span>
+                      <p class="text-white" style="display: block;" id="positive_export_strength_warning">độ sáng càng lớn, ảnh càng tối!!!</p>
+                    </div>
+                    <div class="row bg-dark mt-2 p-2">
+                      <label for="random_nails" class="form-label">Số lượng đinh xét mỗi lần duyệt</label>
+                      <input type="range" id="random_nails" name="random_nails" class="form-range" step="10" min="100" max="500" value="300" />
+                      <span id="random_nails_value">300</span>
+                      <p class="text-white" style="display: block;" id="random_nails_warning">Càng nhiều đinh, ảnh càng đẹp, xử lý càng chậm!!!</p>
+                    </div>
+                    <div class="row bg-dark mt-2 p-2">
+                      <label for="nail_step" class="form-label">Khoảng cách đinh neo</label>
+                      <input type="range" id="nail_step" name="nail_step" class="form-range" step="1" min="1" max="10" value="4" />
+                      <span id="nail_step_value">4</span>
+                      <p class="text-white" style="display: block;" id="nail_step_warning">Khoảng cách càng bé, càng nhiều đinh neo, ảnh càng đẹp, xử lý càng chậm!!!</p>
+                    </div>
+                    <div class="row bg-dark mt-2 p-2">
+                      <label for="form-check" class="form-label">Lựa chọn nền ảnh</label>
+                      <div class="form-check">
+                        <input type="radio" class="form-check-input" id="radio1_wb" name="wb" value="False" checked />Nền trắng
+                        <label class="form-check-label" for="radio1_wb"></label>
+                      </div>
+                      <div class="form-check">
+                        <input type="radio" class="form-check-input" id="radio2_wb" name="wb" value="True" />Nền đen
+                        <label class="form-check-label" for="radio2_wb"></label>
+                      </div>
+                    </div>
+                    <div class="row bg-dark mt-2 p-2">
+                      <label for="form-check" class="form-label">Trắng đen/màu</label>
+                      <div class="form-check">
+                        <input type="radio" class="form-check-input" id="radio1_rgb" name="rgb" value="False" checked />Trắng đen
+                        <label class="form-check-label" for="radio1_rgb"></label>
+                      </div>
+                      <div class="form-check">
+                        <input type="radio" class="form-check-input" id="radio2_rgb" name="rgb" value="True" />Màu
+                        <label class="form-check-label" for="radio2_rgb"></label>
+                      </div>
+                    </div>
+                    <div class="row bg-dark mt-2 p-2">
+                      <label for="form-check" class="form-label">Hình dạng khung</label>
+                      <div class="form-check">
+                        <input type="radio" class="form-check-input" id="radio1_rect" name="rect" value="True" />Hình vuông
+                        <label class="form-check-label" for="radio1_rect"></label>
+                      </div>
+                      <div class="form-check">
+                        <input type="radio" class="form-check-input" id="radio2_rect" name="rect" value="False" checked />Hình tròn
+                        <label class="form-check-label" for="radio2_rect"></label>
+                      </div>
+                    </div>
+                      <button type="submit" class="btn btn-primary mt-3 mr-auto">Bắt đầu</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% if image_result %}
+        <div class="accordion mt-2" id="accordionOutput">
+          <div class="accordion-item">
+            <h2 class="accordion-header bg-dark" id="headingOutput">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOutput" aria-expanded="true" aria-controls="collapseOutput">
+                Output
+              </button>
+            </h2>
+            <div id="collapseOutput" class="accordion-collapse collapse" aria-labelledby="headingOutput" data-bs-parent="#accordionOutput">
+              <div class="accordion-body bg-black">
+                  <div class="row justify-content-center">
+                    <img src="{{ image_result }}" alt="Result Image" />
+                  </div>
+                  <a href="{{ image_result }}" download="result_image.jpg" class="btn btn-primary mt-3 mr-auto">Tải ảnh về</a>
+                </div>
+            </div>
+          </div>
+        </div>
+        {% if user.is_authenticated %}
+        <div class="accordion mt-2" id="accordionSave">
+          <div class="accordion-item">
+            <h2 class="accordion-header bg-dark" id="headingSave">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSave" aria-expanded="true" aria-controls="collapseSave">
+                Lưu ảnh
+              </button>
+            </h2>
+            <div id="collapseSave" class="accordion-collapse collapse" aria-labelledby="headingSave" data-bs-parent="#accordionSave">
+              <div class="accordion-body bg-black">
+                  <div class="row justify-content-center">
+                    <form action="{% url 'art:save_art' user.id %}" method="post" class="text-white" id="formSaveArt">
+                      {% csrf_token %}
+                      <div class="row bg-dark mt-2 p-2">
+                        <label for="title" class="form-label">Tên ảnh</label>
+                        <input type="text" class="form-control" id="title" name="title" />
+                      </div>
+                      <div class="row bg-dark mt-2 p-2">
+                        <label for="description" class="form-label">Mô tả chi tiết</label>
+                        <input type="text" class="form-control" id="description" name="description"/>
+                      </div>
+                      <div class="row bg-dark mt-2 p-2">
+                        <label for="is_published" class="form-label">Bạn có muốn chia sẻ ảnh này</label>
+                        <input type="radio" class="form-check-input" id="radio_is_published" name="is_published" value="True"/>Tôi muốn chia sẻ
+                      </div>
+                      <button type="submit" class="btn btn-primary mt-3 mr-auto">Lưu ảnh</button>
+                    </form>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% endif %}
+    </div>
+  </div>
+
+  <script>
+    var pullAmountRange = document.getElementById('pull_amount')
+    var pullAmountValue = document.getElementById('pull_amount_value')
+    var pullAmountWarning = document.getElementById('pull_amount_warning')
+    
+    // Bắt sự kiện khi giá trị của input range thay đổi
+    pullAmountRange.addEventListener('input', function () {
+      // Lấy giá trị của input range
+      var value = this.value
+      // Hiển thị giá trị trong một phần tử HTML
+      pullAmountValue.innerHTML = value
+      if (value >= 5000) {
+        pullAmountWarning.style.display = 'block'
+      } else {
+        pullAmountWarning.style.display = 'none'
+      }
+    })
+    
+    var sideLenRange = document.getElementById('side_len')
+    var sideLenValue = document.getElementById('side_len_value')
+    var sideLenWarning = document.getElementById('side_len_warning')
+    
+    // Bắt sự kiện khi giá trị của input range thay đổi
+    sideLenRange.addEventListener('input', function () {
+      // Lấy giá trị của input range
+      var value = this.value
+      // Hiển thị giá trị trong một phần tử HTML
+      sideLenValue.innerHTML = value
+      if (value >= 400) {
+        sideLenWarning.style.display = 'block'
+      } else {
+        sideLenWarning.style.display = 'none'
+      }
+    })
+    var export_strengthRange = document.getElementById('export_strength')
+    var export_strengthValue = document.getElementById('export_strength_value')
+    var positive_export_strength_warning = document.getElementById('positive_export_strength_warning')
+    var negative_export_strength_warning = document.getElementById('negative_export_strength_warning')
+    
+    // Bắt sự kiện khi giá trị của input range thay đổi
+    export_strengthRange.addEventListener('input', function () {
+      // Lấy giá trị của input range
+      var value = this.value
+      // Hiển thị giá trị trong một phần tử HTML
+      export_strengthValue.innerHTML = value
+      if (value >= 0) {
+        positive_export_strength_warning.style.display = 'block'
+        negative_export_strength_warning.style.display = 'none'
+      } else {
+        positive_export_strength_warning.style.display = 'none'
+        negative_export_strength_warning.style.display = 'block'
+      }
+    })
+    
+    var random_nailsRange = document.getElementById('random_nails')
+    var random_nailsValue = document.getElementById('random_nails_value')
+    var random_nailsWarning = document.getElementById('random_nails_warning')
+    // Bắt sự kiện khi giá trị của input range thay đổi
+    random_nailsRange.addEventListener('input', function () {
+      // Lấy giá trị của input range
+      var value = this.value
+      // Hiển thị giá trị trong một phần tử HTML
+      random_nailsValue.innerHTML = value
+      if (value >= 400) {
+        random_nailsWarning.style.display = 'block'
+      } else {
+        random_nailsWarning.style.display = 'none'
+      }
+    })
+    
+    var nail_stepRange = document.getElementById('nail_step')
+    var nail_stepValue = document.getElementById('nail_step_value')
+    var nail_stepWarning = document.getElementById('nail_step_warning')
+    // Bắt sự kiện khi giá trị của input range thay đổi
+    nail_stepRange.addEventListener('input', function () {
+      // Lấy giá trị của input range
+      var value = this.value
+      // Hiển thị giá trị trong một phần tử HTML
+      nail_stepValue.innerHTML = value
+      if (value >= 4) {
+        nail_stepWarning.style.display = 'block'
+      } else {
+        nail_stepWarning.style.display = 'none'
+      }
+    })
+
+  </script>
+{% endblock %}

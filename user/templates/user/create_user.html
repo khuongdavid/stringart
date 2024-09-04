@@ -1,0 +1,43 @@
+{% extends 'home/layout.html' %}
+{% block title %}
+  Đăng ký
+{% endblock title%}
+
+{% block content %}
+<div class="container">
+  <div class="content m-3">
+    <div class="d-flex justify-content-center align-items-center">
+      <div class="row">
+
+      <div class="col-sm-4">
+        <div class="row mt-auto">
+          <h1>Đăng ký</h1>
+          <p>Nhập các thông tin để tạo tài khoản.</p>
+          <p>
+            Bạn đã có tài khoản? <a href="{% url 'user:login' %}">Sign in</a>.
+          </p>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="row">
+          <form class = "border-bottom border-left border-3 border-white text-white " method="POST" enctype="multipart/form-data" action="{% url 'user:create_user' %}">
+            {% csrf_token %}
+            <div class="container">
+              {{ form }}
+            </div>
+            <div class="contaner m-3">
+              <button type="submit" class="btn btn-primary mgt-3">Register</button>
+              <button type="reset" class="btn btn-secondary mgt-3">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+    {% comment %} khúc này làm đăng nhập gg {% endcomment %}
+    {% comment %} <div class="col-sm-6">
+      
+    </div> {% endcomment %}
+</div>
+{% endblock content %}
